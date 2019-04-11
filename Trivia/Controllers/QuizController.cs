@@ -28,7 +28,7 @@ namespace Trivia.Controllers
 
         // GET: Quiz
         [Route("")]
-        public ActionResult Home()
+        public ActionResult Index()
         {
             return View();
         }

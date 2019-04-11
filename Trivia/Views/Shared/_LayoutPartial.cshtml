@@ -18,11 +18,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Trivia", "Home", "Quiz", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Trivia", "Index", "Quiz", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Home", "Home", "Quiz")</li>
+                    <li class="nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Quiz")</li>
                     <li class="nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Play" ? "active" : "")">@Html.ActionLink("Play!", "Play", "Quiz")</li>
                 </ul>
             </div>
