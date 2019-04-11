@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "End";
+    Layout = "~/Views/Shared/_LayoutPartial.cshtml";
+}
+
+@{
+    int miliseconds_total = (int)@ViewBag.Message;
+    int minutes = miliseconds_total / 60000;
+    int seconds = miliseconds_total / 1000 - minutes * 60;
+    int miliseconds = miliseconds_total - minutes * 60 * 1000 - seconds * 1000;
+}
+
+<div class="container container-outer">
+    <h1 class="headline" id="line"><span class="span-line" id="question-text">Congratulations!</span></h1>
+
+    <div class="container" style="margin-left: -15px; text-align:center;">
+        <div style="float:left; margin-top:50px; margin-bottom:50px; padding:25px; margin-left:25%;"><p class="stopwatch" style="font-size:30px;">Your result is...</p></div>
+        <div class="answer-box answer-box-neutral results-box" style="float:right; margin-right:25%;"><b>@minutes</b> min <b>@seconds</b> sec <b>@miliseconds</b> ms</div>
+    </div>
+</div>
+

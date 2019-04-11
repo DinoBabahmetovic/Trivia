@@ -1,0 +1,146 @@
+﻿@model Trivia.ViewModel.QuestionViewModel
+@{
+    ViewBag.Title = "Play";
+    Layout = "~/Views/Shared/_LayoutPartial.cshtml";
+}
+@section JavaScript
+{
+    <script type="text/javascript" src="@Url.Content("/Scripts/stopwatch.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/helper.js")"></script>
+}
+
+<div class="container container-outer">
+
+    <div class="container container-question">
+
+        <h1 class="headline" id="line"><span class="span-line" id="question-text"></span></h1>
+
+        <div class="answer-box float-left answer-box-neutral" id="answer1" onclick="checkAnswer(this.id)"></div>
+        <div class="answer-box float-right answer-box-neutral" id="answer2" onclick="checkAnswer(this.id)"></div>
+    </div>
+
+    <div class="container container-outer">
+        <center>
+            <div class="progress progress-width">
+                <div id="progress-id" class="progress-bar progress-bar-striped active progress-bar-width" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <span id="progress-display">0</span>%
+                </div>
+            </div>
+        </center>
+    </div>
+    <p class="stopwatch"><span id="min">0</span> : <span id="sec">00</span> : <span id="msec">000</span></p>
+</div>
+
+<script>
+    var model;
+    var current_question;
+    var current_progress;
+    var questions_limit;
+
+    //stopwatch
+    var timer = null;
+    var min_txt = document.getElementById("min");
+    var min = Number(min_txt.innerHTML);
+    var sec_txt = document.getElementById("sec");
+    var sec = Number(sec_txt.innerHTML);
+    var msec_txt = document.getElementById("msec");
+    var msec = Number(msec_txt.innerHTML);
+
+    //audio
+    var audio_correct;
+    var audio_incorrect;
+    var audio_finish;
+
+    window.onload = function () {
+        current_question = 1;
+        current_progress = 0;
+        questions_limit = 7;
+        setModel();
+        setQuestionText(0);
+        setAnswers(0);
+        startStopwatch();
+        audio_correct = new Audio("/Audio/correct-answer.mp3");
+        audio_incorrect = new Audio("/Audio/incorrect-answer.mp3");
+        audio_finish = new Audio("/Audio/congratulations.mp3");
+    };
+
+    function checkAnswer(clicked_id) {
+
+        if (getElement(clicked_id).innerHTML == model[current_question - 1].RightAnswer) {
+
+            if (current_question == questions_limit) {
+                audio_finish.play();
+                getElement(clicked_id).classList.add("answer-correct");
+                stopWatch();
+                sleep(1500).then(() => {
+                    var result = Number(min_txt.innerHTML) * 60 * 1000 + Number(sec_txt.innerHTML) * 1000 + Number(msec_txt.innerHTML);
+                    window.location.href = "/Quiz/End/" + result.toString();
+                })
+                current_progress = 100;
+            }
+            else {
+                playAudio(audio_correct);
+                getElement(clicked_id).classList.add("answer-correct");
+                sleep(750).then(() => {
+                    var i = parseInt(current_question);
+
+                    getElement(clicked_id).classList.remove("answer-correct");
+                    setQuestionText(i-1);
+                    setAnswers(i-1);
+                })
+                current_question += 1;
+                current_progress += Math.floor(100 / questions_limit);
+            }
+        }
+        else {
+            playAudio(audio_incorrect);
+            getElement(clicked_id).classList.add("answer-incorrect");
+            var previous_question = current_question;
+
+            sleep(750).then(() => {
+                getElement(clicked_id).classList.remove("answer-incorrect");
+                if (previous_question != 1) {
+                    setQuestionText(0);
+                    setAnswers(0);
+                }
+            })
+                current_question = 1;
+                current_progress = 0;
+        }
+        setProgress(current_progress);
+    }
+
+    function setQuestionText(index) {
+        var question_text = model[index].Name;
+        if (question_text.length > 60) getElement("question-text").classList.add("question-small");
+        else getElement("question-text").classList.remove("question-small");
+        getElement("question-text").innerHTML = (index + 1) + ". " + question_text;
+        getElement("question-text").setAttribute("number", index + 1);
+    }
+
+    function setModel() {
+        var model_passed = @Html.Raw(Json.Encode(Model));
+        model = shuffle(model_passed.Questions);
+    }
+
+    function setProgress(progress) {
+        getElement("progress-id").style.width = progress + "%";
+        getElement("progress-display").innerHTML = progress;
+    }
+
+    function setAnswers(index) {
+
+        var x = Math.floor((Math.random() * 2));
+
+        if (x == 0) {
+            getElement("answer1").innerHTML = model[index].RightAnswer;
+            getElement("answer2").innerHTML = model[index].WrongAnswer;
+        }
+        else {
+            getElement("answer2").innerHTML = model[index].RightAnswer;
+            getElement("answer1").innerHTML = model[index].WrongAnswer;
+        }
+    }
+
+</script>
+

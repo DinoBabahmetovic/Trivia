@@ -1,0 +1,72 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.container {
+    margin: 0px auto;
+}
+
+.container-outer {
+    margin-top: 50px;
+    margin-left: -15px;
+}
+
+.container > div {
+    display: inline-block;
+}
+
+.shadow-bottom {
+    box-shadow: 0 4px 2px -2px gray;
+}
+
+.shadow-all {
+    box-shadow: 0 -6px 0 #fff, 0 1px 6px rgba(0,0,0, .35);
+}
+
+.animation-enter {
+    animation: 1.2s ease-in-out 0s 1 slideInFromTop;
+}
+
+.stopwatch {
+    font-size: 42px;
+    font-family: 'Crimson Text', serif;
+    color: #2c3e50;
+    text-align: center;
+}
+
+/*Navigation*/
+.nav-list {
+    font-size: 24px;
+    font-family: 'Crimson Text', serif;
+}
