@@ -89,7 +89,6 @@
 
 .container-question {
     margin-left: -15px;
-    margin-top: 21px;
 }
 
 .progress-width {
@@ -98,6 +97,15 @@
 
 .progress-bar-width {
     width: 0%;
+}
+
+.btn-close {
+    color: #17252a;
+    font-size: 36px;
+}
+
+.btn-close:hover {
+    color: #3aafa9;
 }
 
 /*End View CSS*/
