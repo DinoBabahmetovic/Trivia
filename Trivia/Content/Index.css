@@ -5,14 +5,17 @@
 }
 
 .btn-play {
-    background-color: #97caef;
-    border-color: #97caef;
+    background-color: #def2f1;
+    border-color: #def2f1;
     transition: all 0.5s ease;
     box-shadow: 0 0 5px gray;
+    color: #17252a;
+    font-family: 'Crimson Text', serif;
+    font-size: x-large;
 }
 
 .btn-play:hover {
-    background-color: #ee4c7c;
-    border-color: #ee4c7c;
+    background-color: #3aafa9;
+    border-color: #3aafa9;
     cursor: pointer;
 }

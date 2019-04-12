@@ -15,7 +15,7 @@ namespace Trivia.Controllers
                 new Question {Id = 1, Name = "The art of growing small ornamental trees is called what?", RightAnswer = "Karaoke", WrongAnswer = "Bonsai"},
                 new Question {Id = 2, Name = "Who was the mouse, Tom or Jerry?", RightAnswer = "Tom", WrongAnswer = "Jerry"},
                 new Question {Id = 3, Name = "Which of these are tourist attractions in Egypt?", RightAnswer = "Cubes", WrongAnswer = "Pyramids"},
-                new Question {Id = 4, Name = "FIFA is the rulling international body of which sport?", RightAnswer = "Swimming", WrongAnswer = "Soccer"},
+                new Question {Id = 4, Name = "FIFA is the rulling international body of which sport?", RightAnswer = "Swimming", WrongAnswer = "Football"},
                 new Question {Id = 5, Name = "What does a white flag generally mean?", RightAnswer = "Attack", WrongAnswer = "Surrender"},
                 new Question {Id = 6, Name = "Which of these is not a European capital city?", RightAnswer = "Paris", WrongAnswer = "Tokyo"},
                 new Question {Id = 7, Name = "What is missing from this movie title: \"The Lion ____\"?", RightAnswer = "Queen", WrongAnswer = "King"},
