@@ -123,7 +123,7 @@
 
     function setQuestionText(index) {
         var question_text = model[index].Name;
-        if (question_text.length > 60) getElement("question-text").classList.add("question-small");
+        if (question_text.length > 65) getElement("question-text").classList.add("question-small");
         else getElement("question-text").classList.remove("question-small");
         getElement("question-text").innerHTML = (index + 1) + ". " + question_text;
         getElement("question-text").setAttribute("number", index + 1);
