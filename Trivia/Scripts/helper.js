@@ -19,3 +19,8 @@ function playAudio(audio) {
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
+
+function returnToHome() {
+    console.log("hellooo");
+    window.location.href = "/";
+}

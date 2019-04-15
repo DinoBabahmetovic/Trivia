@@ -3,40 +3,42 @@
     ViewBag.Title = "Play";
     Layout = "~/Views/Shared/_LayoutPartial.cshtml";
 }
+
 @section JavaScript
 {
     <script type="text/javascript" src="@Url.Content("/Scripts/stopwatch.js")"></script>
     <script type="text/javascript" src="@Url.Content("/Scripts/helper.js")"></script>
 }
 
-    <div class="container container-outer">
+<div class="container container-outer">
 
-        <button type="button" class="close btn-close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <button type="button" class="close btn-close" aria-label="Close" onclick="returnToHome()">
+        <span aria-hidden="true">&times;</span>
+    </button>
 
-        <div class="container container-question">
+    <div class="container container-question">
 
-            <h1 class="headline" id="line"><span class="span-line" id="question-text"></span></h1>
+        <h1 class="headline" id="question-text"></h1>
 
-            <div class="answer-box float-left answer-box-neutral" id="answer1" onclick="checkAnswer(this.id)"></div>
-            <div class="answer-box float-right answer-box-neutral" id="answer2" onclick="checkAnswer(this.id)"></div>
-        </div>
-
-        <div class="container container-outer">
-            <center>
-                <div class="progress progress-width">
-                    <div id="progress-id" class="progress-bar progress-bar-striped active progress-bar-width" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                        <span id="progress-display">0</span>%
-                    </div>
-                </div>
-            </center>
-        </div>
-        <p class="stopwatch"><span id="min">0</span> : <span id="sec">00</span> : <span id="msec">000</span></p>
+        <div class="answer-box float-left answer-box-neutral" id="answer1" onclick="checkAnswer(this.id)"></div>
+        <div class="answer-box float-right answer-box-neutral" id="answer2" onclick="checkAnswer(this.id)"></div>
     </div>
+
+    <div class="container container-outer">
+        <center>
+            <div class="progress progress-width">
+                <div id="progress-id" class="progress-bar progress-bar-striped active progress-bar-width" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <span id="progress-display">0</span>%
+                </div>
+            </div>
+        </center>
+    </div>
+    <p class="stopwatch"><span id="min">0</span> : <span id="sec">00</span> : <span id="msec">000</span></p>
+</div>
 
 <script>
     var model;
+    var mode;
     var current_question;
     var current_progress;
     var questions_limit;
@@ -70,7 +72,12 @@
 
     function checkAnswer(clicked_id) {
 
-        if (getElement(clicked_id).innerHTML == model[current_question - 1].RightAnswer) {
+        var isRight;
+        if (mode == "Standard" && getElement(clicked_id).innerHTML == model[current_question - 1].RightAnswer) isRight = true;
+        else if (mode == "Difficult" && getElement(clicked_id).innerHTML == model[current_question - 1].WrongAnswer) isRight = true;
+        else isRight = false;
+
+        if (isRight) {
 
             if (current_question == questions_limit) {
                 audio_finish.play();
@@ -125,6 +132,7 @@
     function setModel() {
         var model_passed = @Html.Raw(Json.Encode(Model));
         model = shuffle(model_passed.Questions);
+        mode = model_passed.Mode;
     }
 
     function setProgress(progress) {

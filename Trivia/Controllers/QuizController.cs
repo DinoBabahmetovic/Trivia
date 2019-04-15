@@ -12,19 +12,17 @@ namespace Trivia.Controllers
     {
         List<Question> questions = new List<Question>
             {
-                new Question {Id = 1, Name = "The art of growing small ornamental trees is called what?", RightAnswer = "Karaoke", WrongAnswer = "Bonsai"},
-                new Question {Id = 2, Name = "Who was the mouse, Tom or Jerry?", RightAnswer = "Tom", WrongAnswer = "Jerry"},
-                new Question {Id = 3, Name = "Which of these are tourist attractions in Egypt?", RightAnswer = "Cubes", WrongAnswer = "Pyramids"},
-                new Question {Id = 4, Name = "FIFA is the rulling international body of which sport?", RightAnswer = "Swimming", WrongAnswer = "Football"},
-                new Question {Id = 5, Name = "What does a white flag generally mean?", RightAnswer = "Attack", WrongAnswer = "Surrender"},
-                new Question {Id = 6, Name = "Which of these is not a European capital city?", RightAnswer = "Paris", WrongAnswer = "Tokyo"},
-                new Question {Id = 7, Name = "What is missing from this movie title: \"The Lion ____\"?", RightAnswer = "Queen", WrongAnswer = "King"},
-                new Question {Id = 8, Name = "In which game do you buy and sell properties, avoid jail time, and draw chance cards?", RightAnswer = "Risk", WrongAnswer = "Monopoly"},
-                new Question {Id = 9, Name = "In what comedy is a child accidentaly left behind at home, while his family goes on vacation?", RightAnswer = "Crazy, Stupid, Love", WrongAnswer = "Home Alone"},
-                new Question {Id = 10, Name = "Which od these animals is not a bird?", RightAnswer = "Parrot", WrongAnswer = "Zebra"}
+                new Question {Id = 1, Name = "The art of growing small ornamental trees is called what?", WrongAnswer = "Karaoke", RightAnswer = "Bonsai"},
+                new Question {Id = 2, Name = "Who was the mouse, Tom or Jerry?", WrongAnswer = "Tom", RightAnswer = "Jerry"},
+                new Question {Id = 3, Name = "Which of these are tourist attractions in Egypt?", WrongAnswer = "Cubes", RightAnswer = "Pyramids"},
+                new Question {Id = 4, Name = "FIFA is the rulling international body of which sport?", WrongAnswer = "Swimming", RightAnswer = "Football"},
+                new Question {Id = 5, Name = "What does a white flag generally mean?", WrongAnswer = "Attack", RightAnswer = "Surrender"},
+                new Question {Id = 6, Name = "Which of these is not a European capital city?", WrongAnswer = "Paris", RightAnswer = "Tokyo"},
+                new Question {Id = 7, Name = "What is missing from this movie title: \"The Lion ____\"?", WrongAnswer = "Queen", RightAnswer = "King"},
+                new Question {Id = 8, Name = "In which game do you buy and sell properties, avoid jail time, and draw chance cards?", WrongAnswer = "Risk", RightAnswer = "Monopoly"},
+                new Question {Id = 9, Name = "In what comedy is a child accidentaly left behind at home, while his family goes on vacation?", WrongAnswer = "Crazy, Stupid, Love", RightAnswer = "Home Alone"},
+                new Question {Id = 10, Name = "Which od these animals is not a bird?", WrongAnswer = "Parrot", RightAnswer = "Zebra"}
             };
-
-        string result = "jebote";
 
         // GET: Quiz
         [Route("")]
@@ -34,12 +32,13 @@ namespace Trivia.Controllers
         }
 
         // GET: Quiz/Play
-        [Route("quiz/play")]
-        public ActionResult Play()
+        [Route("quiz/play/{mode}")]
+        public ActionResult Play(string mode)
         {
             var viewModel = new QuestionViewModel
             {
-                Questions = questions
+                Questions = questions,
+                Mode = mode
             };
             return View(viewModel);
         }

@@ -23,7 +23,16 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Quiz")</li>
-                    <li class="nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Play" ? "active" : "")">@Html.ActionLink("Play!", "Play", "Quiz")</li>
+                    <li class="dropdown nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Play" ? "active" : "")">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            @(ViewContext.RouteData.Values["mode"] == null ? "Play" : ViewContext.RouteData.Values["mode"])
+                            <span class="caret nav-arrow"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Standard", "Play", "Quiz", new { mode = "Standard" }, null)</li>
+                            <li>@Html.ActionLink("Difficult", "Play", "Quiz", new { mode = "Difficult" }, null)</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

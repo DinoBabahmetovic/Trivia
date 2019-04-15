@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_LayoutPartial.cshtml";
 }
 
+@section JavaScript
+{
+    <script type="text/javascript" src="@Url.Content("/Scripts/helper.js")"></script>
+}
+
 @{
     int miliseconds_total = (int)@ViewBag.Message;
     int minutes = miliseconds_total / 60000;
@@ -12,7 +17,14 @@
 }
 
 <div class="container container-outer">
-    <h1 class="headline" id="line"><span class="span-line" id="question-text">Congratulations!</span></h1>
+
+    <button type="button" class="close btn-close" aria-label="Close" onclick="returnToHome()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="container container-question">
+        <h1 class="headline" id="line">Congratulations!</h1>
+    </div>
 
     <div class="container" style="margin-left: -15px; text-align:center;">
         <div style="float:left; margin-top:50px; margin-bottom:50px; padding:25px; margin-left:25%;"><p class="stopwatch" style="font-size:30px;">Your result is...</p></div>
