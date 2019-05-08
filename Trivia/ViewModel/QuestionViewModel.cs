@@ -8,7 +8,7 @@ namespace Trivia.ViewModel
 {
     public class QuestionViewModel
     {
-        public List<Question> Questions { get; set; }
+        public List<question> Questions { get; set; }
         public string Mode { get; set; }
     }
 }
