@@ -25,10 +25,12 @@ namespace Trivia.Controllers
             List<question> questionsList = new List<question>();
             using(DBModels dbModel = new DBModels())
             {
-                questionsList = dbModel.questions.ToList<question>();
+                //questionsList = dbModel.questions.ToList<question>();
+                if (mode == "Standard") questionsList = dbModel.questions.Where(x => x.type == 1).ToList<question>();
+                else questionsList = dbModel.questions.Where(x => x.type == 2).ToList<question>();
             }
-            if (mode == "Standard") questionsList.RemoveAll(s => s.type == 2);
-            else questionsList.RemoveAll(s => s.type == 1);
+            //if (mode == "Standard") questionsList.RemoveAll(s => s.type == 2);
+            //else questionsList.RemoveAll(s => s.type == 1);
 
 
             var viewModel = new QuestionViewModel
