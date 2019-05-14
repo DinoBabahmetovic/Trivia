@@ -50,6 +50,40 @@ namespace Trivia.Controllers
             return View();
         }
 
+        [Route("quiz/ranking")]
+        public ActionResult Ranking()
+        {
+            List<score> scoreList = new List<score>();
+            using (DBModels dbModel = new DBModels())
+            {
+                scoreList = dbModel.scores.OrderBy(x => x.time).ToList<score>();
+            }
+
+            var viewModel = new RankingViewModel
+            {
+                Rankings = scoreList
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: Quiz/SaveScore
+        [HttpPost]
+        public ActionResult SaveScore(string Player, int Time)
+        {
+            score scoreModel = new score
+            {
+                player = Player,
+                time = Time
+            };
+
+            using (DBModels dbModel = new DBModels())
+            {
+                dbModel.scores.Add(scoreModel);
+                dbModel.SaveChanges();
+            }
+            return RedirectToAction("Ranking");
+        }
 
         /*[HttpPost]
         public ActionResult UpdateResult(string res)

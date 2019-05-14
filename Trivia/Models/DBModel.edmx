@@ -15,8 +15,17 @@
           <Property Name="incorrect_answer" Type="varchar" MaxLength="45" />
           <Property Name="type" Type="int" />
         </EntityType>
+        <EntityType Name="score">
+          <Key>
+            <PropertyRef Name="score_id" />
+          </Key>
+          <Property Name="score_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="player" Type="varchar" MaxLength="45" />
+          <Property Name="time" Type="int" />
+        </EntityType>
         <EntityContainer Name="triviadbModelStoreContainer">
           <EntitySet Name="question" EntityType="Self.question" Schema="triviadb" store:Type="Tables" />
+          <EntitySet Name="score" EntityType="Self.score" Schema="triviadb" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -34,7 +43,16 @@
         </EntityType>
         <EntityContainer Name="DBModels" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="questions" EntityType="Self.question" />
+          <EntitySet Name="scores" EntityType="triviadbModel.score" />
         </EntityContainer>
+        <EntityType Name="score">
+          <Key>
+            <PropertyRef Name="score_id" />
+          </Key>
+          <Property Name="score_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="player" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -49,6 +67,15 @@
                 <ScalarProperty Name="question_name" ColumnName="question_name" />
                 <ScalarProperty Name="correct_answer" ColumnName="correct_answer" />
                 <ScalarProperty Name="incorrect_answer" ColumnName="incorrect_answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scores">
+            <EntityTypeMapping TypeName="triviadbModel.score">
+              <MappingFragment StoreEntitySet="score">
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="player" ColumnName="player" />
+                <ScalarProperty Name="score_id" ColumnName="score_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

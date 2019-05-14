@@ -1,0 +1,48 @@
+﻿.new-line-div {
+    clear: both;
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.input-element {
+    margin: auto;
+    margin-top: 50px;
+    transition: all 0.5s ease;
+    font-size: x-large;
+    font-family: 'Crimson Text', serif;
+    text-align: center;
+    color: #17252a;
+    width: 46%;
+    box-shadow: 0 0 5px gray;
+    border-color: transparent;
+}
+
+.input-element:hover {
+    border-color: #3aafa9;
+}
+
+.input-element:focus {
+    border-color: #3aafa9;
+    box-shadow: 0 0 5px grey;
+}
+
+.btn-submit {
+    margin-top: 50px;
+    width: 25%;
+    margin-bottom: 50px;
+}
+
+.results-box {
+    width: 325px;
+    height: 100px;
+    padding: 25px;
+    color: #17252a;
+    border-radius: 15px;
+    margin-top: 50px;
+    transition: all 0.5s ease;
+    font-size: xx-large;
+    font-family: 'Crimson Text', serif;
+    text-align: center;
+    box-shadow: 0 0 5px gray;
+}

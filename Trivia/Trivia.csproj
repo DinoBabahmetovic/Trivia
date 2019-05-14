@@ -175,8 +175,12 @@
     <Compile Include="Models\question.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\score.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
+    <Compile Include="ViewModel\RankingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-flatly.css" />
@@ -185,10 +189,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Audio\correct-answer.mp3" />
+    <Content Include="Content\End.css" />
     <Content Include="Content\Index.css" />
     <Content Include="Audio\incorrect-answer.mp3" />
     <Content Include="Audio\congratulations.mp3" />
     <Content Include="Content\Play.css" />
+    <Content Include="Content\Ranking.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -245,6 +251,7 @@
     <Content Include="Views\Quiz\Play.cshtml" />
     <Content Include="Views\Quiz\End.cshtml" />
     <Content Include="Views\Quiz\Index.cshtml" />
+    <Content Include="Views\Quiz\Ranking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

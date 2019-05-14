@@ -30,9 +30,10 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Standard", "Play", "Quiz", new { mode = "Standard" }, null)</li>
-                            <li>@Html.ActionLink("Difficult", "Play", "Quiz", new { mode = "Difficult" }, null)</li>
+                            <li>@Html.ActionLink("Reverse", "Play", "Quiz", new { mode = "Reverse" }, null)</li>
                         </ul>
                     </li>
+                    <li class="nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Ranking" ? "active" : "")">@Html.ActionLink("Ranking", "Ranking", "Quiz")</li>
                 </ul>
             </div>
         </div>

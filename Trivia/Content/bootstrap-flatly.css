@@ -7055,7 +7055,6 @@ button.list-group-item-danger {
     }
 
 button.close {
-    padding: 0;
     cursor: pointer;
     background: transparent;
     border: 0;
@@ -8324,6 +8323,7 @@ input {
     .close:focus {
         color: #fff;
         opacity: 1;
+        outline: none;
     }
 
 .alert .alert-link {

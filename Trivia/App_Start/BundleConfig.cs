@@ -26,7 +26,9 @@ namespace Trivia
                       "~/Content/bootstrap-flatly.css",
                       "~/Content/Site.css",
                       "~/Content/Play.css",
-                      "~/Content/Index.css"));
+                      "~/Content/Index.css",
+                      "~/Content/End.css",
+                      "~/Content/Ranking.css"));
         }
     }
 }

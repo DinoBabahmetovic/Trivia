@@ -26,5 +26,6 @@ namespace Trivia.Models
         }
     
         public virtual DbSet<question> questions { get; set; }
+        public virtual DbSet<score> scores { get; set; }
     }
 }
