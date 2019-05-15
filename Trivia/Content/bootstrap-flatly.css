@@ -2901,7 +2901,7 @@ caption {
 }
 
 th {
-    text-align: left;
+    /*text-align: left;*/
 }
 
 .table {

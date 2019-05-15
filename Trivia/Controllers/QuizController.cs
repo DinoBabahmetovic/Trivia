@@ -19,19 +19,16 @@ namespace Trivia.Controllers
         }
 
         // GET: Quiz/Play
-        [Route("quiz/play/{mode}")]
-        public ActionResult Play(string mode)
+        [Route("quiz/play/{mode}/{language}")]
+        public ActionResult Play(string language, string mode)
         {
             List<question> questionsList = new List<question>();
             using(DBModels dbModel = new DBModels())
             {
                 //questionsList = dbModel.questions.ToList<question>();
-                if (mode == "Standard") questionsList = dbModel.questions.Where(x => x.type == 1).ToList<question>();
-                else questionsList = dbModel.questions.Where(x => x.type == 2).ToList<question>();
+                if (mode == "Standard") questionsList = dbModel.questions.Where(x => (x.type == 1 && x.language == language)).ToList<question>();
+                else questionsList = dbModel.questions.Where(x => (x.type == 2 && x.language == language)).ToList<question>();
             }
-            //if (mode == "Standard") questionsList.RemoveAll(s => s.type == 2);
-            //else questionsList.RemoveAll(s => s.type == 1);
-
 
             var viewModel = new QuestionViewModel
             {
@@ -43,8 +40,8 @@ namespace Trivia.Controllers
         }
 
         // GET: Customers/Details/{Id}
-        [Route("quiz/end/{result}")]
-        public ActionResult End(int result)
+        [Route("quiz/end/{mode}/{result}")]
+        public ActionResult End(string mode, int result)
         {
             ViewBag.Message = result;
             return View();
@@ -53,15 +50,18 @@ namespace Trivia.Controllers
         [Route("quiz/ranking")]
         public ActionResult Ranking()
         {
-            List<score> scoreList = new List<score>();
+            List<score> scoreListStandard = new List<score>();
+            List<score> scoreListReverse = new List<score>();
             using (DBModels dbModel = new DBModels())
             {
-                scoreList = dbModel.scores.OrderBy(x => x.time).ToList<score>();
+                scoreListStandard = dbModel.scores.Where(x => x.mode == 1).OrderBy(x => x.time).ToList<score>();  //OrderBy(x => x.time).ToList<score>();
+                scoreListReverse = dbModel.scores.Where(x => x.mode == 2).OrderBy(x => x.time).ToList<score>();
             }
 
             var viewModel = new RankingViewModel
             {
-                Rankings = scoreList
+                RankingsStandard = scoreListStandard,
+                RankingsReverse = scoreListReverse
             };
 
             return View(viewModel);
@@ -69,12 +69,13 @@ namespace Trivia.Controllers
 
         // POST: Quiz/SaveScore
         [HttpPost]
-        public ActionResult SaveScore(string Player, int Time)
+        public ActionResult SaveScore(string Player, int Time, int Mode)
         {
             score scoreModel = new score
             {
                 player = Player,
-                time = Time
+                time = Time,
+                mode = Mode
             };
 
             using (DBModels dbModel = new DBModels())
@@ -84,20 +85,5 @@ namespace Trivia.Controllers
             }
             return RedirectToAction("Ranking");
         }
-
-        /*[HttpPost]
-        public ActionResult UpdateResult(string res)
-        {
-            //return RedirectToAction("End", "Quiz", result);
-            result = res;
-            return Content(res);
-        }*/
-
-        /*[HttpPost]
-        public ActionResult End(string result)
-        {
-            ViewBag.Result = result;
-            return PartialView();
-        }*/
     }
 }

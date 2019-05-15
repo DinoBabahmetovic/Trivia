@@ -17,5 +17,6 @@ namespace Trivia.Models
         public int score_id { get; set; }
         public string player { get; set; }
         public Nullable<int> time { get; set; }
+        public Nullable<int> mode { get; set; }
     }
 }

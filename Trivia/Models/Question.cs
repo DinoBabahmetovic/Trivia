@@ -19,5 +19,6 @@ namespace Trivia.Models
         public string correct_answer { get; set; }
         public string incorrect_answer { get; set; }
         public Nullable<int> type { get; set; }
+        public string language { get; set; }
     }
 }

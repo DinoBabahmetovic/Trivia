@@ -14,6 +14,7 @@
           <Property Name="correct_answer" Type="varchar" MaxLength="45" />
           <Property Name="incorrect_answer" Type="varchar" MaxLength="45" />
           <Property Name="type" Type="int" />
+          <Property Name="language" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="score">
           <Key>
@@ -22,6 +23,7 @@
           <Property Name="score_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="player" Type="varchar" MaxLength="45" />
           <Property Name="time" Type="int" />
+          <Property Name="mode" Type="int" />
         </EntityType>
         <EntityContainer Name="triviadbModelStoreContainer">
           <EntitySet Name="question" EntityType="Self.question" Schema="triviadb" store:Type="Tables" />
@@ -40,6 +42,7 @@
           <Property Name="correct_answer" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="incorrect_answer" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="type" Type="Int32" />
+          <Property Name="language" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="DBModels" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="questions" EntityType="Self.question" />
@@ -52,6 +55,7 @@
           <Property Name="score_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="player" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="time" Type="Int32" />
+          <Property Name="mode" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -62,6 +66,7 @@
           <EntitySetMapping Name="questions">
             <EntityTypeMapping TypeName="triviadbModel.question">
               <MappingFragment StoreEntitySet="question">
+                <ScalarProperty Name="language" ColumnName="language" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="question_id" ColumnName="question_id" />
                 <ScalarProperty Name="question_name" ColumnName="question_name" />
@@ -73,6 +78,7 @@
           <EntitySetMapping Name="scores">
             <EntityTypeMapping TypeName="triviadbModel.score">
               <MappingFragment StoreEntitySet="score">
+                <ScalarProperty Name="mode" ColumnName="mode" />
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="player" ColumnName="player" />
                 <ScalarProperty Name="score_id" ColumnName="score_id" />

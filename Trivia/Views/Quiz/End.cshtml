@@ -14,6 +14,7 @@
     int minutes = miliseconds_total / 60000;
     int seconds = miliseconds_total / 1000 - minutes * 60;
     int miliseconds = miliseconds_total - minutes * 60 * 1000 - seconds * 1000;
+    var url_current = Request.RawUrl;
 }
 
 <div class="container container-outer">
@@ -45,7 +46,9 @@
         var url = "/Quiz/SaveScore";
         var player = $("#inputName").val();
         var time = @miliseconds_total;
-        $.post(url, { Player: player, Time: time }, function () {
+        var mode = 1;
+        if (@url_current.IndexOf("Reverse") != -1) mode = 2;
+        $.post(url, { Player: player, Time: time, Mode: mode }, function () {
             window.location.href='@Url.Action("Ranking", "Quiz")';
         });
     }

@@ -8,6 +8,7 @@ namespace Trivia.ViewModel
 {
     public class RankingViewModel
     {
-        public List<score> Rankings { get; set; }
+        public List<score> RankingsStandard { get; set; }
+        public List<score> RankingsReverse { get; set; }
     }
 }

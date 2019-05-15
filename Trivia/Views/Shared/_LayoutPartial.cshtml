@@ -29,8 +29,8 @@
                             <span class="caret nav-arrow"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("Standard", "Play", "Quiz", new { mode = "Standard" }, null)</li>
-                            <li>@Html.ActionLink("Reverse", "Play", "Quiz", new { mode = "Reverse" }, null)</li>
+                            <li>@Html.ActionLink("Standard", "Play", "Quiz", new { mode = "Standard", language = "en" }, null)</li>
+                            <li>@Html.ActionLink("Reverse", "Play", "Quiz", new { mode = "Reverse", language = "en" }, null)</li>
                         </ul>
                     </li>
                     <li class="nav-list @(ViewContext.RouteData.Values["Action"].ToString() == "Ranking" ? "active" : "")">@Html.ActionLink("Ranking", "Ranking", "Quiz")</li>
