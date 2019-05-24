@@ -32,7 +32,7 @@
     box-shadow: 0 0 5px gray;
 }
 
-.answer-box:hover {
+.answer-box:hover, .answer-box-selected {
     background-color: #3aafa9;
     color: white;
     cursor: pointer;
@@ -61,13 +61,13 @@
 .float-left {
     float: left;
     /*animation: 1.2s ease-in-out 0s 1 slideInFromLeft;*/
-    margin-left: 20%;
+    margin-left: 12%;
 }
 
 .float-right {
     float: right;
     /*animation: 1.2s ease-in-out 0s 1 slideInFromRight;*/
-    margin-right: 20%;
+    margin-right: 12%;
 }
 
 .headline {
@@ -102,4 +102,14 @@
 
 .btn-close:hover {
     color: #3aafa9;
+}
+
+.btn-next {
+    margin: 0 auto;
+    margin-top: 125px;
+    width: 10%;
+    height: 11px;
+    font-size: x-large;
+    padding-top: 15px;
+    border-radius: 5px;
 }

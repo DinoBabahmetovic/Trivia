@@ -40,7 +40,7 @@ namespace Trivia.Controllers
             return View(viewModel);
         }
 
-        // GET: Customers/Details/{Id}
+        // GET: quiz/end/Standard/12345
         [Route("quiz/end/{mode}/{result}")]
         public ActionResult End(string mode, int result)
         {

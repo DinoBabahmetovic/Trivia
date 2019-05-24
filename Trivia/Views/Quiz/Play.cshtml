@@ -16,12 +16,16 @@
         <span aria-hidden="true">&times;</span>
     </button>
 
-    <div class="container container-question">
+    <div class="container container-question" style="margin-bottom: 50px;">
 
-        <h1 class="headline" id="question-text"></h1>
+        <h1 class="headline" id="question-text" style="margin-bottom: 100px;"></h1>
 
-        <div class="answer-box float-left answer-box-neutral" id="answer1" onclick="checkAnswer(this.id)"></div>
-        <div class="answer-box float-right answer-box-neutral" id="answer2" onclick="checkAnswer(this.id)"></div>
+        <div class="answer-box float-left answer-box-neutral" id="answer1" onclick="selectAnswer(this.id)"></div>
+        <div class="answer-box float-right answer-box-neutral" id="answer2" onclick="selectAnswer(this.id)"></div>
+
+        <div class="new-line-div">
+            <div class="answer-box answer-box-neutral btn-next" id="next" onclick="checkAnswer()">Next</div>
+        </div>
     </div>
 
     <div class="container container-outer">
@@ -42,6 +46,8 @@
     var current_question;
     var current_progress;
     var questions_limit;
+    var clicked_id;
+    var next_enabled;
 
     //stopwatch
     var timer = null;
@@ -61,6 +67,8 @@
         current_question = 1;
         current_progress = 0;
         questions_limit = 10;
+        clicked_id = "";
+        next_enabled = true;
         setModel();
         setQuestionText(0);
         setAnswers(0);
@@ -70,60 +78,84 @@
         audio_finish = new Audio("/Audio/congratulations.mp3");
     };
 
-    function checkAnswer(clicked_id) {
+    function checkAnswer() {
 
-        var isRight;
-        if (mode == "Standard" && getElement(clicked_id).innerHTML == model[current_question - 1].correct_answer) isRight = true;
-        else if (mode == "Reverse" && getElement(clicked_id).innerHTML == model[current_question - 1].incorrect_answer) isRight = true;
-        else isRight = false;
+        if (clicked_id != "" && next_enabled) {
+            next_enabled = false;
+            var isRight;
+            if (mode == "Standard" && getElement(clicked_id).innerHTML == model[current_question - 1].correct_answer) isRight = true;
+            else if (mode == "Reverse" && getElement(clicked_id).innerHTML == model[current_question - 1].incorrect_answer) isRight = true;
+            else isRight = false;
 
-        if (isRight) {
+            if (isRight) {
 
-            if (current_question == questions_limit) {
-                audio_finish.play();
-                getElement(clicked_id).classList.add("answer-correct");
-                stopWatch();
-                sleep(1500).then(() => {
-                    var result = Number(min_txt.innerHTML) * 60 * 1000 + Number(sec_txt.innerHTML) * 1000 + Number(msec_txt.innerHTML);
-                    window.location.href = "/Quiz/End/" + mode + "/" + result.toString();
-                })
-                current_progress = 100;
+                if (current_question == questions_limit) {
+                    audio_finish.play();
+                    getElement(clicked_id).classList.add("answer-correct");
+                    stopWatch();
+                    sleep(1500).then(() => {
+                        var result = Number(min_txt.innerHTML) * 60 * 1000 + Number(sec_txt.innerHTML) * 1000 + Number(msec_txt.innerHTML);
+                        window.location.href = "/Quiz/End/" + mode + "/" + result.toString();
+                    })
+                    current_progress = 100;
+                }
+                else {
+                    playAudio(audio_correct);
+                    getElement(clicked_id).classList.add("answer-correct");
+                    sleep(750).then(() => {
+                        var i = parseInt(current_question);
+
+                        getElement(clicked_id).classList.remove("answer-correct");
+                        setQuestionText(i - 1);
+                        setAnswers(i - 1);
+                        setSelected();
+                    })
+                    current_question += 1;
+                    current_progress += Math.floor(100 / questions_limit);
+                }
             }
             else {
-                playAudio(audio_correct);
-                getElement(clicked_id).classList.add("answer-correct");
+                playAudio(audio_incorrect);
+                getElement(clicked_id).classList.add("answer-incorrect");
+                var previous_question = current_question;
+
                 sleep(750).then(() => {
-                    var i = parseInt(current_question);
-
-                    getElement(clicked_id).classList.remove("answer-correct");
-                    setQuestionText(i-1);
-                    setAnswers(i-1);
+                    getElement(clicked_id).classList.remove("answer-incorrect");
+                    if (previous_question != 1) {
+                        setQuestionText(0);
+                        setAnswers(0);
+                    }
+                    setSelected();
                 })
-                current_question += 1;
-                current_progress += Math.floor(100 / questions_limit);
-            }
-        }
-        else {
-            playAudio(audio_incorrect);
-            getElement(clicked_id).classList.add("answer-incorrect");
-            var previous_question = current_question;
-
-            sleep(750).then(() => {
-                getElement(clicked_id).classList.remove("answer-incorrect");
-                if (previous_question != 1) {
-                    setQuestionText(0);
-                    setAnswers(0);
-                }
-            })
                 current_question = 1;
                 current_progress = 0;
-        }
-        setProgress(current_progress);
+            }
+            setProgress(current_progress);
+        }       
+    }
+
+    function selectAnswer(answer_id) {
+        if (next_enabled) {
+            if (clicked_id != "") {
+                getElement(clicked_id).classList.remove("answer-box-selected");
+                getElement(clicked_id).classList.add("answer-box-neutral");
+            }
+            clicked_id = answer_id;
+            getElement(clicked_id).classList.remove("answer-box-neutral");
+            getElement(clicked_id).classList.add("answer-box-selected");
+        }   
+    }
+
+    function setSelected() {
+        getElement(clicked_id).classList.remove("answer-box-selected");
+        getElement(clicked_id).classList.add("answer-box-neutral");
+        clicked_id = "";
+        next_enabled = true;
     }
 
     function setQuestionText(index) {
         var question_text = model[index].question_name;
-        if (question_text.length > 65) getElement("question-text").classList.add("question-small");
+        if (question_text.length > 90) getElement("question-text").classList.add("question-small");
         else getElement("question-text").classList.remove("question-small");
         getElement("question-text").innerHTML = (index + 1) + ". " + question_text;
         getElement("question-text").setAttribute("number", index + 1);
