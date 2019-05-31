@@ -41,13 +41,7 @@
 </div>
 
 <script>
-    var model;
-    var mode;
-    var current_question;
-    var current_progress;
-    var questions_limit;
-    var clicked_id;
-    var next_enabled;
+    var model, mode, question_count, question_progress, current_progress, questions_limit, clicked_id, next_enabled;
 
     //stopwatch
     var timer = null;
@@ -59,18 +53,17 @@
     var msec = Number(msec_txt.innerHTML);
 
     //audio
-    var audio_correct;
-    var audio_incorrect;
-    var audio_finish;
+    var audio_correct, audio_incorrect, audio_finish;
 
     window.onload = function () {
-        current_question = 1;
+        question_count = 0;
+        question_progress = 1;
         current_progress = 0;
         questions_limit = 10;
         clicked_id = "";
         next_enabled = true;
         setModel();
-        setQuestionText(0);
+        setQuestionText(0, 1);
         setAnswers(0);
         startStopwatch();
         audio_correct = new Audio("/Audio/correct-answer.mp3");
@@ -83,13 +76,13 @@
         if (clicked_id != "" && next_enabled) {
             next_enabled = false;
             var isRight;
-            if (mode == "Standard" && getElement(clicked_id).innerHTML == model[current_question - 1].correct_answer) isRight = true;
-            else if (mode == "Reverse" && getElement(clicked_id).innerHTML == model[current_question - 1].incorrect_answer) isRight = true;
+            if (mode == "Standard" && getElement(clicked_id).innerHTML == model[question_count].correct_answer) isRight = true;
+            else if (mode == "Reverse" && getElement(clicked_id).innerHTML == model[question_count].incorrect_answer) isRight = true;
             else isRight = false;
 
             if (isRight) {
 
-                if (current_question == questions_limit) {
+                if (question_progress == questions_limit) {
                     audio_finish.play();
                     getElement(clicked_id).classList.add("answer-correct");
                     stopWatch();
@@ -102,35 +95,31 @@
                 else {
                     playAudio(audio_correct);
                     getElement(clicked_id).classList.add("answer-correct");
-                    sleep(750).then(() => {
-                        var i = parseInt(current_question);
 
+                    sleep(750).then(() => {
                         getElement(clicked_id).classList.remove("answer-correct");
-                        setQuestionText(i - 1);
-                        setAnswers(i - 1);
-                        setSelected();
+                        moveToNextQuestion();
                     })
-                    current_question += 1;
+                    question_progress += 1;
                     current_progress += Math.floor(100 / questions_limit);
                 }
             }
             else {
                 playAudio(audio_incorrect);
                 getElement(clicked_id).classList.add("answer-incorrect");
-                var previous_question = current_question;
 
                 sleep(750).then(() => {
                     getElement(clicked_id).classList.remove("answer-incorrect");
-                    if (previous_question != 1) {
-                        setQuestionText(0);
-                        setAnswers(0);
-                    }
-                    setSelected();
+                    moveToNextQuestion();
                 })
-                current_question = 1;
-                current_progress = 0;
+                if (mode == "Reverse") {
+                    question_progress = 1;
+                    current_progress = 0;
+                }
             }
             setProgress(current_progress);
+            if (question_count == model.length - 1) question_count = 0;
+            else question_count += 1;
         }       
     }
 
@@ -146,19 +135,19 @@
         }   
     }
 
-    function setSelected() {
+    function removeSelected() {
         getElement(clicked_id).classList.remove("answer-box-selected");
         getElement(clicked_id).classList.add("answer-box-neutral");
         clicked_id = "";
         next_enabled = true;
     }
 
-    function setQuestionText(index) {
+    function setQuestionText(index, q_number) {
         var question_text = model[index].question_name;
         if (question_text.length > 90) getElement("question-text").classList.add("question-small");
         else getElement("question-text").classList.remove("question-small");
-        getElement("question-text").innerHTML = (index + 1) + ". " + question_text;
-        getElement("question-text").setAttribute("number", index + 1);
+        getElement("question-text").innerHTML = q_number + ". " + question_text;
+        getElement("question-text").setAttribute("number", q_number);
     }
 
     function setModel() {
@@ -173,7 +162,6 @@
     }
 
     function setAnswers(index) {
-
         var x = Math.floor((Math.random() * 2));
 
         if (x == 0) {
@@ -184,6 +172,12 @@
             getElement("answer2").innerHTML = model[index].correct_answer;
             getElement("answer1").innerHTML = model[index].incorrect_answer;
         }
+    }
+
+    function moveToNextQuestion() {
+        setQuestionText(parseInt(question_count), question_progress);
+        setAnswers(parseInt(question_count));
+        removeSelected();
     }
 
 </script>
