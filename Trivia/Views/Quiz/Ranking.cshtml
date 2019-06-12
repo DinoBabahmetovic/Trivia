@@ -10,40 +10,6 @@
     </div>
 
     <div class="container" style="margin-left: -15px; text-align:center;">
-        <table class="table table-striped table-hover table-ranking">
-            <thead>
-                <tr style="background-color: #3aafa9;">
-                    <td colspan="5" style="color: white; text-align: center;">Reverse mode</td>
-                </tr>
-                <tr style="background-color: #def2f1;">
-                    <th width="10%"></th>
-                    <th width="45%" align="left">Player</th>
-                    <th width="15%" align="right">Minutes</th>
-                    <th width="15%" align="right">Seconds</th>
-                    <th width="15%" align="right">Milisecs</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int i = 1;
-                    int mins, secs, milis;
-                }
-                @foreach (var x in Model.RankingsReverse)
-                {
-                    mins = (int)x.time / 60000;
-                    secs = (int)x.time / 1000 - mins * 60;
-                    milis = (int)x.time - mins * 60 * 1000 - secs * 1000;
-                    <tr>
-                        <td>@i.</td>
-                        <td align="left">@x.player</td>
-                        <td align="right">@mins</td>
-                        <td align="right">@secs</td>
-                        <td align="right">@milis</td>
-                    </tr>
-                    i++;
-                }
-            </tbody>
-        </table>
 
         <table class="table table-striped table-hover table-ranking">
             <thead>
@@ -69,7 +35,7 @@
                     secs2 = (int)x.time / 1000 - mins2 * 60;
                     milis2 = (int)x.time - mins2 * 60 * 1000 - secs2 * 1000;
                     <tr>
-                        <td>@j.</td>
+                        <td class="@(j == 1 ? "gold" : "") @(j == 2 ? "silver" : "") @(j == 3 ? "bronze" : "")">@j.</td>
                         <td align="left">@x.player</td>
                         <td align="right">@mins2</td>
                         <td align="right">@secs2</td>
@@ -79,6 +45,42 @@
                 }
             </tbody>
         </table>
+
+        <table class="table table-striped table-hover table-ranking">
+            <thead>
+                <tr style="background-color: #3aafa9;">
+                    <td colspan="5" style="color: white; text-align: center;">Reverse mode</td>
+                </tr>
+                <tr style="background-color: #def2f1;">
+                    <th width="10%"></th>
+                    <th width="45%" align="left">Player</th>
+                    <th width="15%" align="right">Minutes</th>
+                    <th width="15%" align="right">Seconds</th>
+                    <th width="15%" align="right">Milisecs</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 1;
+                    int mins, secs, milis;
+                }
+                @foreach (var x in Model.RankingsReverse)
+                {
+                    mins = (int)x.time / 60000;
+                    secs = (int)x.time / 1000 - mins * 60;
+                    milis = (int)x.time - mins * 60 * 1000 - secs * 1000;
+                    <tr>
+                        <td class="@(i == 1 ? "gold" : "") @(i == 2 ? "silver" : "") @(i == 3 ? "bronze" : "")">@i.</td>
+                        <td align="left">@x.player</td>
+                        <td align="right">@mins</td>
+                        <td align="right">@secs</td>
+                        <td align="right">@milis</td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+
     </div>
 </div>
 
