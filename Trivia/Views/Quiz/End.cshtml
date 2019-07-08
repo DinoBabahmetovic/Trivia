@@ -48,6 +48,7 @@
         var time = @miliseconds_total;
         var mode = 1;
         if (@url_current.IndexOf("Reverse") != -1) mode = 2;
+        else if (@url_current.IndexOf("Extreme") != -1) mode = 3;
         $.post(url, { Player: player, Time: time, Mode: mode }, function () {
             window.location.href='@Url.Action("Ranking", "Quiz")';
         });
