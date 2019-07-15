@@ -77,7 +77,8 @@
         if (clicked_id != "" && next_enabled) {
             next_enabled = false;
             var isRight;
-            if (mode == "Standard" && getElement(clicked_id).innerHTML == model[question_count].correct_answer) isRight = true;
+            if (mode == "Reverse" && Number(min_txt.innerHTML) >= 3) isRight = true;
+            else if (mode == "Standard" && getElement(clicked_id).innerHTML == model[question_count].correct_answer) isRight = true;
             else if (mode == "Reverse" && getElement(clicked_id).innerHTML == model[question_count].incorrect_answer) isRight = true;
             else if (mode == "Extreme" && extreme_switch == 1 && getElement(clicked_id).innerHTML == model[question_count].correct_answer) isRight = true;
             else if (mode == "Extreme" && extreme_switch == 2 && getElement(clicked_id).innerHTML == model[question_count].incorrect_answer) isRight = true;
